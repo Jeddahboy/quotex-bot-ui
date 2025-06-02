@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quotex Signal Bot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+    h1 {
+      margin-bottom: 1rem;
+    }
+    .signal {
+      font-size: 2rem;
+      background: #222;
+      padding: 1rem 2rem;
+      border: 1px solid #0f0;
+      border-radius: 8px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quotex Signal Bot 📈</h1>
+  <div id="signal" class="signal">Loading signal...</div>
+  <footer>Auto-refreshes every 15 seconds</footer>
+
+  <script>
+    async function fetchSignal() {
+      try {
+        const res = await fetch('https://your-api-url.onrender.com/get-signal');
+        const data = await res.json();
+        document.getElementById('signal').innerText = `Signal: ${data.signal.toUpperCase()}`;
+      } catch (e) {
+        document.getElementById('signal').innerText = 'Error fetching signal';
+      }
+    }
+
+    fetchSignal();
+    setInterval(fetchSignal, 15000); // refresh every 15 sec
+  </script>
+</body>
+</html>
